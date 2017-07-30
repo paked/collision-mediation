@@ -1,2 +1,3 @@
 # collision-mediation
-collision detection: what does it do? how does it work? let's find out!
+
+I'm going to try creating an [explorable explanation](http://explorabl.es/) about collision detection.
