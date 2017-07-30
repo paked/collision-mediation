@@ -1,1 +1,1 @@
-window.game = new Game()
+window.game = new AABBPlayground("aabb-playground")

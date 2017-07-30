@@ -12,11 +12,15 @@
     <body>
         <h1>Collision Detection: A Story of Mediation</h1>
 
+        <p><em>Hey! It appears you've found this project. Usually I'd work on things I'm not sure will ever see the light of day on a private repo, but I've been starting to feel bad that a good portion of my GitHub activity is not OSS from the get-go. Don't judge the writing or code just yet, it really is a WIP.</em></p>
+
         <p>If you're anything like me, when you look at something like collision detection your brain immediately turns off. Why is that? "It's too fucking scary" you say? Yeah. I get that. It sucks right! You want to build that awesome game, but can't seem to get past step 3.</p>
 
         <p>Here's the deal though: It doesn't have to be. As great as the internet is, one thing it has NOT done very well is make collision detection seem like an approachable topic. But once you have something even slightly resembling an collision detection system, you realise you have to figure out how to resolve those collisions. If the internet was bad at helping your learn about collision detection... Well, let's turn around now: Game over.</p>
 
         <p>So. This is an explanation (potentially it's explorable too?) for humans, how to detect (AND RESOLVE) collisions in your game or experiment or whatever. <b>Let's get started!</b></p>
+
+        <p><em>SORRY! I forgot to mention something: This 'tutorial' is language agnostic. Personally, I'm using JavaScript and PIXI.js but you could literally use whatever programming language you want. If you're reading this and have recreated it with a different stack, submit a PR to include them (or something like that). The concepts you learn here are applicable everywhere.</em></p>
 
         <h2>Introductions</h2>
 
@@ -34,11 +38,38 @@
 
         <p>Previously, they've just manually prevented themselves from overlapping... But after a particularly bad incident from last week at the sanddwich shop (which they both agreed was both of their faults), they want to put a proper system in place to handle future incidents.</p>
 
-        <p>As you can probably tell, both Steven and Reina are 2D boxes (Rest assured, they're not about to go all FEZ on you).</p>
-
         <h2>Use the space, reader!</h2>
 
-        <p>The first thing we need to do is be able to represent <span class="steven-fg">Steven</span> and <span class="reina-fg">Reina</span> in virtual space:</p>
+        <p>The first thing we need to do is be able to represent <span class="steven-fg">Steven</span> and <span class="reina-fg">Reina</span> in virtual space.</p>
+
+        <p>As you can probably tell, both Steven and Reina are 2D boxes (Rest assured, they're not about to go all FEZ on you). They might be different sizes and colours, but they both still have one face, four sides, and four corners.</p>
+
+        <p>To represent these rectangular shapes, we're going to use a 'data structure' (does that sound intimidating yet?) called an Axis-Aligned Bounding Box, or AABB for short. Don't worry, they're really not as scary as they sound.</p>
+
+        <p>An AABB is a virtual representation of a rectangle. A convenient way to construct an AABB is with two points. The first being the "min", the second the "max". The "min" being the corner of the rectangle closest to the origin (in most cases this is the top-left corner), and the "max" being the furthest away.</p>
+
+        <b>Insert image or diagram or whatever of some visual explanation of this here.</b>
+
+        <p>If I write this out in code, it looks something like the following</p>
+
+        <div>
+            <pre><code>class AABB {
+    constructor(min, max) {
+        this.min = min
+        this.max = max
+    }
+}</code></pre>
+        </div>
+
+        <p>Here's a place for you to play with bounding boxes in. See if you can recreate <span class="steven-fg">Steven</span> and <span class="reina-fg">Reina</span>!</p>
+
+        <canvas id="aabb-playground"></canvas>
+
+        <p>Awesome! We're making killer progress. Now we have a way of representing our friends virtually, we can start trying to figure out when they are overlapping.</p>
+
+        <h2>Close the overlap</h2>
+
+        <h2>Can't touch this!</h2>
 
         <script src="vendor/pixi/pixi.js"></script>
 
@@ -46,6 +77,10 @@
         <script src="src/input.js"></script>
         <script src="src/physics.js"></script>
         <script src="src/game.js"></script>
+
+        <script src="src/games/collision.js"></script>
+        <script src="src/games/aabb_playground.js"></script>
+
         <script src="src/init.js"></script>
     </body>
 </html>

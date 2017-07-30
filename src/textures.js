@@ -26,3 +26,18 @@ function reinaTexture(r) {
 
   return t
 }
+
+function anchorTexture(r) {
+  var g = new PIXI.Graphics()
+
+  g.beginFill(0x000)
+
+  g.drawRect(0, 0, 10, 10)
+  g.endFill()
+
+  var t = PIXI.RenderTexture.create(g.width, g.height);
+
+  r.render(g, t)
+
+  return t
+}
