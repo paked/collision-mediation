@@ -43,11 +43,3 @@ class Input {
 		return this.states.right
 	}
 }
-
-class Point {
-	constructor(x, y) {
-		this.x = x || 0
-		this.y = y || 0
-	}
-}
-
