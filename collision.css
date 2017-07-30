@@ -1,0 +1,35 @@
+/*
+ * Colors:
+ *
+ * Steven: #88C8DD
+ *
+ * Reina: #ECA5B3
+ *
+ */
+
+.steven-fg {
+    color: #88C8DD;
+}
+
+.reina-fg {
+    color: #ECA5B3;
+}
+
+.character {
+    display: block;
+    content: " ";
+}
+
+.steven {
+    width: 100px;
+    height: 100px;
+
+    background-color: #88C8DD;
+}
+
+.reina {
+    width: 200px;
+    height: 50px;
+
+    background-color: #ECA5B3;
+}
