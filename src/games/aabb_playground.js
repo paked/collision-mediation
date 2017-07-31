@@ -7,7 +7,7 @@ class AABBPlayground extends Game {
     this.anchorA = this.createAnchor(mid.x - 75, mid.y - 125)
     this.anchorB = this.createAnchor(mid.x + 75, mid.y + 125)
 
-    this.box = new PIXI.Graphics()
+    this.box = this.createBox(this.anchorA, this.anchorB)
     this.stage.addChild(this.box)
 
     this.stage.addChild(this.anchorA)
@@ -28,8 +28,11 @@ class AABBPlayground extends Game {
       g.beginFill(0x9EDD88)
     }
 
-    g.drawRect(bb.x, bb.y, bb.width, bb.height)
+    g.drawRect(0, 0, bb.width, bb.height)
     g.endFill()
+
+    g.x = bb.x
+    g.y = bb.y
   }
 
   boxBounds() {
@@ -46,14 +49,44 @@ class AABBPlayground extends Game {
 
     return new AABB(min, max)
   }
+
+  createBox(anchorA, anchorB) {
+    let b = new PIXI.Graphics()
+    b.interactive = true
+
+    b.
+      on('pointerdown', this.anchorDragStart).
+      on('pointerup', this.anchorDragEnd).
+      on('pointerupoutside', this.anchorDragEnd).
+      on('pointermove', this.boxDragMove)
+
+    b.a1 = anchorA
+    b.a2 = anchorB
+
+    console.log(b.interactive)
+
+    return b
+  }
  
   createAnchor(x, y) {
     let anchor = new PIXI.Sprite(anchorTexture(this.r))
 
     anchor.interactive = true
 
-    anchor.x = x || 0
-    anchor.y = y || 0
+    anchor.raw = new Point()
+    
+    anchor.setPos = function(x, y) {
+      console.log(x, y, this)
+      anchor.raw.x = x
+      anchor.raw.y = y
+
+      let s = snapPointToGrid(25, anchor.raw.x, anchor.raw.y)
+
+      anchor.x = s.x
+      anchor.y = s.y
+    }
+
+    anchor.setPos(x, y)
 
     anchor.
       on('pointerdown', this.anchorDragStart).
@@ -64,10 +97,32 @@ class AABBPlayground extends Game {
     return anchor
   }
 
+  boxDragMove(ev) {
+    if (this.dragging) {
+      let raw = ev.data.getLocalPosition(this.parent)
+
+      let diff = new Point(raw.x - this.lastPoint.x, raw.y - this.lastPoint.y)
+
+      this.a1.setPos(
+        this.a1.raw.x + diff.x,
+        this.a1.raw.y + diff.y,
+      )
+
+      this.a2.setPos(
+        this.a2.raw.x + diff.x,
+        this.a2.raw.y + diff.y,
+      )
+
+      this.lastPoint = raw
+    }
+  }
+
   anchorDragStart(ev) {
     this.dragging = true
 
     this.alpha = 0.5
+
+    this.lastPoint = ev.data.getLocalPosition(this.parent)
   }
 
   anchorDragEnd(ev) {
@@ -80,10 +135,8 @@ class AABBPlayground extends Game {
     if (this.dragging) {
       let raw = ev.data.getLocalPosition(this.parent);
 
-      let snapped = snapPointToGrid(25, raw.x, raw.y)
-
-      this.x = snapped.x;
-      this.y = snapped.y;
+      console.log(raw)
+      this.setPos(raw.x, raw.y)
     }
   }
 }
@@ -96,7 +149,7 @@ function snapIntToGrid(res, i) {
   let diff = i%res
   let round = Math.floor(i/res)
 
-  if (diff > 0.5) {
+  if (diff >= 0.5) {
     round += 1
   }
 
