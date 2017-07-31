@@ -103,15 +103,17 @@ class AABBPlayground extends Game {
 
       let diff = new Point(raw.x - this.lastPoint.x, raw.y - this.lastPoint.y)
 
-      this.a1.setPos(
-        this.a1.raw.x + diff.x,
-        this.a1.raw.y + diff.y,
-      )
+      this.a1.raw.x += diff.x
+      this.a2.raw.x += diff.x
 
-      this.a2.setPos(
-        this.a2.raw.x + diff.x,
-        this.a2.raw.y + diff.y,
-      )
+      this.a1.x = this.a1.raw.x
+      this.a2.x = this.a2.raw.x
+
+      this.a1.raw.y += diff.y
+      this.a2.raw.y += diff.y
+
+      this.a1.y = this.a1.raw.y
+      this.a2.y = this.a2.raw.y
 
       this.lastPoint = raw
     }

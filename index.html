@@ -69,7 +69,13 @@
 
         <h2>Close the overlap</h2>
 
+        <p>Our next step is to find out a way to check if <span class="steven-fg">Steven</span> or <span class="reina-fg">Reina</span> are touching each other.</p>
+
+        <canvas id="overlap"></canvas>
+
         <h2>Can't touch this!</h2>
+
+        <p>Now that we know THAT our two friends are overlapping, we need to actually do something about it. Enter... collision resolution!</p>
 
         <script src="vendor/pixi/pixi.js"></script>
 
@@ -78,6 +84,8 @@
         <script src="src/physics.js"></script>
         <script src="src/game.js"></script>
 
+        <script src="src/games/characters.js"></script>
+        <script src="src/games/overlap.js"></script>
         <script src="src/games/collision.js"></script>
         <script src="src/games/aabb_playground.js"></script>
 

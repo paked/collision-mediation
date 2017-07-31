@@ -1,1 +1,2 @@
-window.game = new AABBPlayground("aabb-playground")
+window.aabb = new AABBPlayground("aabb-playground")
+window.overlap = new Overlap("overlap")

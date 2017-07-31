@@ -10,6 +10,13 @@ class Physics {
     throw "Don't know how to turn this thing into an AABB"
   }
 
+  intersects(a, b) {
+    return b.min.x <= a.max.x &&
+      a.min.x <= b.max.x &&
+      b.min.y <= a.max.y &&
+      a.min.y <= b.max.y
+  }
+
   intersection(a, b) {
     let x1 = b.x
     let y1 = b.y
