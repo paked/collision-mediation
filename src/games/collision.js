@@ -1,4 +1,4 @@
-class Collision extends Game {
+class Collision extends Characters {
   update(dt) {
     let next = new Point(this.steven.x, this.steven.y)
 
