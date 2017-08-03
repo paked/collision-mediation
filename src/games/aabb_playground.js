@@ -32,8 +32,8 @@ class AABBPlayground extends Game {
   update(dt) {
     let g = this.box
 
-    let pw = g.width.toFixed(0)
-    let ph = g.height.toFixed(0)
+    let pw = this.box.size.x.toFixed(0)
+    let ph = this.box.size.y.toFixed(0)
 
     g.clear()
 
@@ -44,6 +44,9 @@ class AABBPlayground extends Game {
     } else {
       g.beginFill(0x9EDD88)
     }
+
+    this.box.size.x = parseInt(pw)
+    this.box.size.y = parseInt(ph)
 
     g.drawRect(0, 0, this.box.size.x, this.box.size.y)
     g.endFill()
