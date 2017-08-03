@@ -65,11 +65,33 @@
 
         <canvas id="aabb-playground"></canvas>
 
-        <p>Awesome! We're making killer progress. Now we have a way of representing our friends virtually, we can start trying to figure out when they are overlapping.</p>
+        <p>Awesome! We're making killer progress. Now we have a way of representing our friends virtually, we can start trying to figure out when they are touching.</p>
 
         <h2>Close the overlap</h2>
 
-        <p>Our next step is to to check if <span class="steven-fg">Steven</span> or <span class="reina-fg">Reina</span> are touching each other.</p>
+        <p>Our next step is to to check if <span class="steven-fg">Steven</span> or <span class="reina-fg">Reina</span> are touching each other. Once we know this it's going to simply be a matter of offsetting the our friends by the amount they have moved into each other... Theoretically making them not overlap.</p>
+
+        <p>Because of our (awesome) decision to use AABBs to model <span class="steven-fg">Steven</span> and <span class="reina-fg">Reina</span> in virtual space, we have a super clear and understandable algorithm we can use to check whether or not they are 'intersecting'.</p>
+
+        <p>It boils down to the following: If one of the corners of this AABB is in me, we're sure as hell overlapping.</p>
+
+        <p>The code in JavaScript looks like the following:<p>
+        <div>
+            <pre><code>function isIntersecting(a, b) {
+    return b.min.x &lt;= a.max.x &amp;&amp;
+      a.min.x &lt;= b.max.x &amp;&amp;
+      b.min.y &lt;= a.max.y &amp;&amp;
+      a.min.y &lt;= b.max.y
+}</code></pre>
+        </div>
+
+        <p>But, if your language is lucky enough to implement operator overloading (looking at you ruby) you can condense it down another two lines!</p>
+        <div>
+            <pre><code>def interesting?(a, b)
+    b.min &lt;= a.max &amp;&amp;
+    a.min &lt;= b.max
+end</code></pre>
+        </div>
 
         <canvas id="overlap"></canvas>
 
@@ -77,7 +99,7 @@
 
         <p>Now that we know THAT our two friends are overlapping, we need to actually do something about it. Enter... collision resolution!</p>
 
-        <canvas id="collision"></canvas>
+        <!-- <canvas id="collision"></canvas> -->
 
         <script src="vendor/pixi/pixi.js"></script>
 
