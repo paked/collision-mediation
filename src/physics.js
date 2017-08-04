@@ -18,25 +18,25 @@ class Physics {
   }
 
   intersection(a, b) {
-    let x1 = b.x
-    let y1 = b.y
-    let x2 = b.x + b.width
-    let y2 = b.y + b.height
+    let x1 = b.min.x
+    let y1 = b.min.y
+    let x2 = b.max.x
+    let y2 = b.max.y
 
-    if (a.x > x1) {
+    if (a.min.x > x1) {
       x1 = a.x
     }
 
-    if (a.y > y1) {
+    if (a.min.y > y1) {
       y1 = a.y
     }
 
-    if (a.x + a.width < x2) {
-      x2 = a.x + a.width
+    if (a.max.x < x2) {
+      x2 = a.max.x
     }
 
-    if (a.y + a.height < y2) {
-      y2 = a.y + a.height
+    if (a.max.y < y2) {
+      y2 = a.max.y
     }
 
     if (x2 <= x1 || y2 <= y1) {
