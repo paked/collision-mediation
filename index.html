@@ -12,7 +12,7 @@
     <body>
         <h1>Collision Detection: A Story of Mediation</h1>
 
-        <p><em>Hey! It appears you've found this project. Usually I'd work on things I'm not sure will ever see the light of day on a private repo, but I've been starting to feel bad that a good portion of my GitHub activity is not OSS from the get-go. Don't judge the writing or code just yet, it really is a WIP.</em></p>
+        <p><em>Hey! It appears you've found this unfinished project. Usually I'd work on things I'm not sure will ever see the light of day on a private repo, but I've been starting to feel bad that a good portion of my GitHub activity is not OSS from the get-go. Don't judge the writing or code just yet, it really is a WIP.</em></p>
 
         <p>If you're anything like me, when you look at something like collision detection your brain immediately turns off. Why is that? "It's too fucking scary" you say? Yeah. I get that. It sucks right! You want to build that awesome game, but can't seem to get past step 3.</p>
 
@@ -93,13 +93,23 @@
 end</code></pre>
         </div>
 
+        <p>Conveniently this versionreally does make it clear what is happening</p>
+
         <canvas id="overlap"></canvas>
+
+        <p>Hell yeah! Look at how much progress that is. We just went from two boring lifeless rectangles to two TOTALLY FABULOUS RECTANGLES THAT KNOW WHEN THEY OVERLAP! We can definitely mark the feature request that is <span class="steven-fg">Steven</span> and <span class="reina-fg">Reina</span>'s not wanting to collide as firmly 'in progress'. Pat yourself on your god damn back.</p>
+
+        <p>You could build a mouse based maze/stealth game with this logic! But that's for you to figure out yourself. Time to progress.</P>
 
         <h2>Can't touch this!</h2>
 
         <p>Now that we know THAT our two friends are overlapping, we need to actually do something about it. Enter... collision resolution!</p>
 
-        <!-- <canvas id="collision"></canvas> -->
+        <p>As mentioned before the basic premise of collision resolution is that once you know that an object is intercepting another, you figure  out the minimum amount of distance to make it not collide and then apply that (garbled english activate!).</p>
+
+        <p>To make what's happening super clear, I'm going to break it up into two stages: vertical and horiztonal resolution. We'll do vertical first because, well, fuck societal norms.</p>
+
+        <canvas id="collision"></canvas>
 
         <script src="vendor/pixi/pixi.js"></script>
 

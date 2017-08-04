@@ -6,8 +6,12 @@ class Input {
 		this.conf = conf || INPUT_DEFAULTS
 		this.states = { up: false, down: false, left: false, right: false }
 
-		window.document.onkeydown = ev => { this.handleKeyPress(ev, true, this) }
-		window.document.onkeyup = ev => { this.handleKeyPress(ev, false, this) }
+    if (!window.im) {
+      window.im = new InputManager()
+    }
+
+    window.im.addDown(ev => { this.handleKeyPress(ev, true, this) })
+    window.im.addUp(ev => { this.handleKeyPress(ev, false, this) })
 	}
 
 	handleKeyPress(ev, v, input) {
@@ -42,4 +46,37 @@ class Input {
 	get right() {
 		return this.states.right
 	}
+}
+
+class InputManager {
+  constructor() {
+    this.downs = []
+    this.ups = []
+
+    this.onkeydown = this.onkeydown.bind(this)
+    this.onkeyup = this.onkeyup.bind(this)
+
+    window.document.onkeydown = this.onkeydown
+    window.document.onkeyup = this.onkeyup
+  }
+
+  addDown(f) {
+    this.downs.push(f)
+  }
+
+  addUp(f) {
+    this.ups.push(f)
+  }
+
+  onkeydown(ev) {
+    this.downs.forEach(c => {
+      c(ev)
+    })
+  }
+
+  onkeyup(ev) {
+    this.ups.forEach(c => {
+      c(ev)
+    }) 
+  }
 }
