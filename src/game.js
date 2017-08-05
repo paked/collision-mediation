@@ -27,17 +27,38 @@ class Game {
     if (!id) {
       document.body.appendChild(this.r.view)
     }
+
+    this.stage.interactive = true
+
+    this.stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
+
+    this.stage.paused = false
+
+    this.stage.on('pointerdown', this.inFocus)
+    this.stage.on('pointerupoutside', this.outOfFocus)
+  }
+
+  inFocus(ev) {
+    this.paused = false
+  }
+
+  outOfFocus(ev) {
+    this.paused = true
   }
 
   update(dt) {}
 
   render(now) {
+    console.log(this.stage.paused)
+
     let dt = (now - this.time)/100
     this.time = now
 
-    this.update(dt)
+    if (!this.stage.paused) {
+      this.update(dt)
 
-    this.r.render(this.stage)
+      this.r.render(this.stage)
+    }
 
     requestAnimationFrame(this.render)
   }
