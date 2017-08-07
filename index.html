@@ -109,6 +109,76 @@ end</code></pre>
 
         <p>To make what's happening super clear, I'm going to break it up into two stages: vertical and horiztonal resolution. We'll do vertical first because, well, fuck societal norms.</p>
 
+        <p><em>In previous sections, I've avoided specifically referencing how my movement code works. As it's pretty much intrinsic to this part of the tutorial, I'm going to leave it in.</em></p>
+
+        <div>
+            <pre><code>let next = new Point(this.steven.x, this.steven.y)
+
+if (this.input.up) {
+  next.y -= 50*dt
+}
+
+if (this.input.down) {
+  next.y += 50*dt
+}</code></pre>
+        </div>
+
+        <p>Here we have a pretty standard piece of up/down movement code. Except, instead of applying the change in vertical position directly to our character we assign it to a Point. We're doing this because now that we're thinking about collision, movement is actually a 'potential to move' instead of a 'the character will absofuckinglutely move this much'.</p>
+
+        <div>
+            <pre><code>let b = this.physics.toAABB(this.reina)
+let a = new AABB(next, new Point(this.steven.x + this.steven.width, next.y + this.steven.height))</code></pre>
+        </div>
+
+        <p>Now we instantiate a couple of bounding boxes the size of Reina and Steven. We make sure to adjust Steven's bounding box so that it represents his potential movement (it's based off of <code>this.next</code> instead of <code>this.steven.x</code>.</p>
+
+        <div>
+            <pre><code>intersection(a, b) {
+    let x1 = b.min.x
+    let y1 = b.min.y
+    let x2 = b.max.x
+    let y2 = b.max.y
+
+    if (a.min.x &gt; x1) {
+      x1 = a.x
+    }
+
+    if (a.min.y &gt; y1) {
+      y1 = a.y
+    }
+
+    if (a.max.x &lt; x2) {
+      x2 = a.max.x
+    }
+
+    if (a.max.y &lt; y2) {
+      y2 = a.max.y
+    }
+
+    if (x2 &lt;= x1 || y2 &lt;= y1) {
+      return null
+    }
+
+    return new AABB(new Point(x1, y1), new Point(x2, y2))
+  }</code></pre>
+        </div>
+
+        <p>And here we have our handy little function to figure out how far Steven is overlapping with Reina</p>
+
+        <div>
+            <pre><code>let i = this.physics.intersection(a, b)
+if (i) {
+  let diff = next.y - this.steven.y
+  let mod = diff &lt;= 0 ? 1 : -1
+
+  next.y += i.height * mod
+}
+
+this.steven.y = next.y</code></pre>
+        </div>
+
+        <p>Here we figure out whether or not a collision happened, then decide what direction is going in and subtract the amount Steven is protruding into Reina from <code>next.y</code>. THEN finally apply the position to the sprite.</p>
+
         <canvas id="collision"></canvas>
 
         <script src="vendor/pixi/pixi.js"></script>
